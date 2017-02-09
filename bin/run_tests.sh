@@ -8,8 +8,7 @@ if [ "$1" == "coverage" ]; then
    coverage=1
 fi
 
-## Define if Behat is wanted. If script is executed with coverage option
-## Coverage will be created
+## Define if Behat is wanted.
 behat=0
 if [ "$2" == "behat" ]; then
    behat=1
@@ -44,8 +43,12 @@ else
 fi
 
 if [ "$behat" == 0 ]; then
-    $BINDIR/run_behat.sh --format=progress --format=junit > "$DIR/build/tests/behat.log'&
+    $BINDIR/run_behat.sh --format=progress --format=junit > "$DIR/build/tests/behat.log"&
 fi
 
 wait
-cat $DIR/build/tests/behat.log
+
+# Output Behat Console output after Tests run when log exists
+if [ -f "$DIR/build/tests/behat.log" ]; then
+  cat $DIR/build/tests/behat.log
+fi
