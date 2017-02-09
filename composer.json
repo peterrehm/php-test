@@ -1,0 +1,13 @@
+{
+  "name": "peterrehm/php-test",
+  "license": "MIT",
+  "type": "library",
+  "description": "CI Helper scripts",
+  "require": {
+    "php": "^7.0",
+    "phpunit/phpunit": "^6.0",
+    "sebastian/phpcpd": "^3.0",
+    "phpmd/phpmd" : "^2.6",
+    "squizlabs/php_codesniffer": "^2.8"
+  }
+}

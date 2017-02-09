@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="test_vagrant" basedir="." default="build:main">
+    <!-- Properties -->
+    <property name="dir.build" value="${project.basedir}/build" />
+
+    <!-- Default target -->
+    <target name="build:main"
+            depends="build:clean, build:prepare, build:tests, build:results"
+            description="Run all test and build everything" />
+
+    <!-- Project build clean -->
+    <target name="build:clean" description="Clean up build directories...">
+        <echo msg="Cleaning build directories ..." />
+        <delete dir="${dir.build}" />
+        <exec command="vagrant destroy -f" passthru="true" />
+    </target>
+
+    <!-- Project build prepare -->
+    <target name="build:prepare" description="Create build directories and config...">
+        <echo msg="Prepare the vagrant box..." />
+        <exec command="composer.phar install --ignore-platform-reqs" passthru="true" />
+        <exec command="vagrant box update" passthru="true" />
+        <exec command="vagrant up --no-provision" passthru="true" />
+        <exec command="vagrant ssh -c 'sudo chown -R www-data:www-data /vagrant'" passthru="true" />
+        <exec command="vagrant ssh -c 'sudo chmod -R g+rwxs /vagrant'" passthru="true" />
+    </target>
+
+    <!-- Project build prepare -->
+    <target name="build:tests" description="Run tests in the VM...">
+        <echo msg="Run the tests..." />
+        <exec command="vagrant ssh -c /vagrant/bin/run_tests.sh" passthru="true" />
+        <exec command="vagrant ssh -c /vagrant/bin/run_static_analysis.sh" passthru="true" />
+    </target>
+
+    <!-- Project get build results -->
+    <target name="build:results" description="Fetch the results...">
+        <echo msg="Fetch the build results..." />
+        <exec command="vagrant scp :/vagrant/build ." passthru="true" />
+        <exec command="find build/* -type f -exec sed -i -e 's|/vagrant|${project.basedir}|g' {} +" passthru="true" />
+        <exec command="vagrant halt" passthru="true" />
+    </target>
+</project>
