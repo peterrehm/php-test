@@ -28,12 +28,12 @@ mkdir -p $DIR/build/tests
 mkdir -p $DIR/build/tests/coverage
 cd $DIR
 
-# Install the latest composer dependencies
-composer install
-
 # If a custom file has been provided execute that prior to executing the tests
 if [ -f "$3" ]; then
   eval $3
+else
+    # Install the latest composer dependencies
+    composer install
 fi
 
 ## execute the tests

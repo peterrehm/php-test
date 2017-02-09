@@ -37,6 +37,9 @@ Of course you could just copy from those files and add whatever logic you need
 to it. As it is common to need custom test preparations you can pass a third
 parameter to run tests with a custom script name.
 
+If no script is provided a simple composer install will be executed. If you
+provide a custom script make sure to manually run the composer install.
+
 ````
 # bin/run_tests.sh
 #!/bin/bash
