@@ -44,7 +44,7 @@ else
 fi
 
 if [ "$behat" == 0 ]; then
-    $BINDIR/bin/run_behat.sh --format=progress --format=junit > "$DIR/build/tests/behat.log'&
+    $BINDIR/run_behat.sh --format=progress --format=junit > "$DIR/build/tests/behat.log'&
 fi
 
 wait
