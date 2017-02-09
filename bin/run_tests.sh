@@ -20,7 +20,7 @@ BINDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 DIR="$(dirname "$BINDIR")"
 
 # Adjust to base path when this library is installed using composer
-DIR=${DIR/\/vendor\/peterrehm\/test}
+DIR=${DIR/\/vendor\/peterrehm\/php-test}
 
 # Prepare the build directories
 mkdir -p $DIR/build
